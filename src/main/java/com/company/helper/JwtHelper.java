@@ -46,8 +46,7 @@ public class JwtHelper {
 
     public Boolean validateToken(String token, CustomUserDetails user) {
         final String uid = extractUserId(token);
-//        return (uid.equals(user.getId()) && !isTokenExpired(token));
-        return (uid.equals(user.getUsername()) && !isTokenExpired(token));
+        return (uid.equals(user.getId()) && !isTokenExpired(token));
     }
 
     public Date extractExpiration(String token) {
