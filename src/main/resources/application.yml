@@ -1,0 +1,30 @@
+# Spring configs
+spring:
+  application:
+    name: financial-product
+
+  # Jpa
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  # DataSource
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/finance
+    username: postgres
+    password: root123
+
+  # PORT
+server:
+  port: 8080
+
+  # Token expired date
+tokens:
+  access:
+    expiration-time: 200
+  refresh:
+    expiration-time: 1000
+  sign-key: 6250655367566B5970337336763979244226452948404D635166546A576D5A71
