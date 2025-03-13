@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.dto.ProfileDto;
+import com.company.dto.profile.ProfileDto;
 import com.company.form.ProfileForm;
 
 /**

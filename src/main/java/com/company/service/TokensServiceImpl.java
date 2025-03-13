@@ -1,8 +1,8 @@
 package com.company.service;
 
 import com.company.domain.Tokens;
-import com.company.dto.ProfileDto;
-import com.company.dto.TokenDto;
+import com.company.dto.profile.ProfileDto;
+import com.company.dto.auth.TokenDto;
 import com.company.helper.JwtHelper;
 import com.company.repository.TokensRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.company.dto;
+package com.company.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

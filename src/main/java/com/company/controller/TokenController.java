@@ -1,8 +1,8 @@
 package com.company.controller;
 
-import com.company.dto.JwtDto;
-import com.company.dto.ProfileDto;
-import com.company.dto.TokenDto;
+import com.company.dto.auth.JwtDto;
+import com.company.dto.profile.ProfileDto;
+import com.company.dto.auth.TokenDto;
 import com.company.form.TokenForm;
 import com.company.helper.JwtHelper;
 import io.jsonwebtoken.JwtException;

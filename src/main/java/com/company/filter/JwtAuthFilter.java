@@ -2,7 +2,7 @@ package com.company.filter;
 
 import com.company.config.CustomUserDetails;
 import com.company.config.CustomUserDetailsService;
-import com.company.dto.AuthBasicDto;
+import com.company.dto.auth.AuthBasicDto;
 import com.company.exp.BadRequestException;
 import com.company.helper.JsonHelper;
 import com.company.helper.JwtHelper;

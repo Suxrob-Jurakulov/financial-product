@@ -2,7 +2,7 @@ package com.company.service;
 
 import com.company.domain.Profile;
 import com.company.domain.Role;
-import com.company.dto.ProfileDto;
+import com.company.dto.profile.ProfileDto;
 import com.company.form.ProfileForm;
 import com.company.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;

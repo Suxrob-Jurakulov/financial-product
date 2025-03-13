@@ -1,6 +1,6 @@
 package com.company.form;
 
-import com.company.dto.ProfileDto;
+import com.company.dto.profile.ProfileDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

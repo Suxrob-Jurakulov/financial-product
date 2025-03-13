@@ -1,6 +1,6 @@
 package com.company.domain;
 
-import com.company.dto.ProfileModuleDto;
+import com.company.dto.profile.ProfileModuleDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;

@@ -1,7 +1,7 @@
 package com.company.config;
 
 import com.company.domain.Profile;
-import com.company.dto.ProfileModuleDto;
+import com.company.dto.profile.ProfileModuleDto;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

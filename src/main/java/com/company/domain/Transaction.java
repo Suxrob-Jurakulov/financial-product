@@ -17,7 +17,7 @@ public class Transaction {
     private String id;
 
     @Column(name = "profile_id")
-    private String userId;
+    private String profileId;
 
     @JoinColumn(name = "profile_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)

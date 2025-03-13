@@ -1,7 +1,7 @@
 package com.company.controller;
 
 import com.company.config.CustomUserDetails;
-import com.company.dto.ProfileDto;
+import com.company.dto.profile.ProfileDto;
 import com.company.form.PasswordForm;
 import com.company.form.ProfileEditForm;
 import com.company.service.ProfileService;

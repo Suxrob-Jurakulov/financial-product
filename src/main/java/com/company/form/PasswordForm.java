@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PasswordForm {
 
-    @NotBlank(message = "Phone cannot be empty")
+    @NotBlank(message = "Password cannot be empty")
     private String password;
 
     // Other element
