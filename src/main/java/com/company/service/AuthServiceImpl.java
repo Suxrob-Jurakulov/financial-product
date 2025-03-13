@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.domain.Profile;
+import com.company.domain.UserProfile;
 import com.company.domain.Role;
 import com.company.dto.profile.ProfileDto;
 import com.company.form.ProfileForm;
@@ -23,47 +23,47 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ProfileDto check(String username) {
-        Optional<Profile> profileOpt = repository.findByPhoneAndDeletedIsFalse(username);
+        Optional<UserProfile> profileOpt = repository.findByPhoneAndDeletedIsFalse(username);
         return profileOpt.map(this::map).orElse(null);
     }
 
     @Override
     public ProfileDto getById(String id) {
-        Optional<Profile> profileOpt = repository.findByIdAndDeletedIsFalse(id);
+        Optional<UserProfile> profileOpt = repository.findByIdAndDeletedIsFalse(id);
 
         return profileOpt.map(this::map).orElse(null);
     }
 
     @Override
     public ProfileDto add(ProfileForm form) {
-        Profile profile = new Profile();
+        UserProfile userProfile = new UserProfile();
 
-        profile.setId(UUID.randomUUID().toString());
-        profile.setFirstname(form.getFirstname());
-        profile.setLastname(form.getLastname());
-        profile.setEmail(form.getEmail());
-        profile.setPhone(form.getPhone());
-        profile.setPassword(form.getPassword());
-        profile.setRole(Role.ROLE_USER);
-        profile.setCreatedDate(LocalDateTime.now());
-        profile.setDeleted(false);
+        userProfile.setId(UUID.randomUUID().toString());
+        userProfile.setFirstname(form.getFirstname());
+        userProfile.setLastname(form.getLastname());
+        userProfile.setEmail(form.getEmail());
+        userProfile.setPhone(form.getPhone());
+        userProfile.setPassword(form.getPassword());
+        userProfile.setRole(Role.ROLE_USER);
+        userProfile.setCreatedDate(LocalDateTime.now());
+        userProfile.setDeleted(false);
 
-        repository.save(profile);
-        return map(profile);
+        repository.save(userProfile);
+        return map(userProfile);
     }
 
     // MAPPER
-    private ProfileDto map(Profile profile) {
+    private ProfileDto map(UserProfile userProfile) {
         ProfileDto dto = new ProfileDto();
 
-        dto.setId(profile.getId());
-        dto.setFirstname(profile.getFirstname());
-        dto.setLastname(profile.getLastname());
-        dto.setEmail(profile.getEmail());
-        dto.setPhone(profile.getPhone());
-        dto.setPassword(profile.getPassword());
-        dto.setCreatedDate(profile.getCreatedDate());
-        dto.setModules(profile.getModules());
+        dto.setId(userProfile.getId());
+        dto.setFirstname(userProfile.getFirstname());
+        dto.setLastname(userProfile.getLastname());
+        dto.setEmail(userProfile.getEmail());
+        dto.setPhone(userProfile.getPhone());
+        dto.setPassword(userProfile.getPassword());
+        dto.setCreatedDate(userProfile.getCreatedDate());
+        dto.setModules(userProfile.getModules());
 
         return dto;
     }

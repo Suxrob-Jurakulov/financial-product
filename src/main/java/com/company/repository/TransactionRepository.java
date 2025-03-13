@@ -1,6 +1,6 @@
 package com.company.repository;
 
-import com.company.domain.Transaction;
+import com.company.domain.transactions.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

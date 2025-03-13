@@ -19,7 +19,7 @@ public class CardController extends DefaultController {
 
     private final CardService service;
 
-    private CardDto check(String number) {
+    /*private CardDto check(String number) {
         return service.check(number);
     }
 
@@ -59,7 +59,7 @@ public class CardController extends DefaultController {
         service.changePassword(form);
 
         return ResponseEntity.ok().body("Password changed");
-    }
+    }*/
 
     /*@GetMapping("/user/{userId}")
     public ResponseEntity<List<Card>> getUserCards(@PathVariable Long userId) {

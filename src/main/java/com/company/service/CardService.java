@@ -6,11 +6,11 @@ import com.company.form.cards.CardPasswordForm;
 
 public interface CardService {
 
-    CardDto check(String number);
+   /* CardDto check(String number);
 
     CardDto checkByUser(CardPasswordForm form);
 
     CardDto createCard(CardForm form);
 
-    void changePassword(CardPasswordForm form);
+    void changePassword(CardPasswordForm form);*/
 }

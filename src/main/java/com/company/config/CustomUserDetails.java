@@ -1,6 +1,6 @@
 package com.company.config;
 
-import com.company.domain.Profile;
+import com.company.domain.UserProfile;
 import com.company.dto.profile.ProfileModuleDto;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,11 +20,11 @@ public class CustomUserDetails implements UserDetails {
     String password;
     Set<GrantedAuthority> authorities;
 
-    public CustomUserDetails(Profile profile) {
-        id = profile.getId();
-        phone = profile.getPhone();
-        password = profile.getPassword();
-        authorities = (Set<GrantedAuthority>) mapModulesToAuthorities(profile.getModules());
+    public CustomUserDetails(UserProfile userProfile) {
+        id = userProfile.getId();
+        phone = userProfile.getPhone();
+        password = userProfile.getPassword();
+        authorities = (Set<GrantedAuthority>) mapModulesToAuthorities(userProfile.getModules());
 
     }
 

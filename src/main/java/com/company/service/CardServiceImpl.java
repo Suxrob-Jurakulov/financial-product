@@ -21,7 +21,7 @@ public class CardServiceImpl implements CardService {
     private final CardRepository repository;
 
 
-    @Override
+   /* @Override
     public CardDto check(String number) {
         Optional<Card> cardOpl = repository.findByNumberAndDeletedIsFalse(number);
 
@@ -72,5 +72,5 @@ public class CardServiceImpl implements CardService {
         dto.setCreatedDate(card.getCreatedDate());
 
         return dto;
-    }
+    }*/
 }
