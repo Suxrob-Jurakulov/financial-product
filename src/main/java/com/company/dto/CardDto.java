@@ -14,13 +14,20 @@ import java.time.LocalDateTime;
 public class CardDto {
 
     private String id;
-    private String number;
-    private LocalDate expiryDate;
     private String name;
-    private String status;
     private Long balance;
+    private String status;
+    private String maskedPan;
+    private String realPan;
+    private LocalDate expiryDate;
     private String profileId;
     private ProfileDto profile;
+    private String bin;
+    private String cardIssuingBank;
+    private Integer currencyCode;
+    private String phone;
+    private Boolean sms;
+    private Boolean deleted;
     private LocalDateTime createdDate;
 
 }

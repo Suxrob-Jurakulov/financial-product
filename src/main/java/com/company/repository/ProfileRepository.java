@@ -1,6 +1,6 @@
 package com.company.repository;
 
-import com.company.domain.UserProfile;
+import com.company.domain.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,9 +10,9 @@ import java.util.Optional;
  * @author Sukhrob
  */
 @Repository
-public interface ProfileRepository extends JpaRepository<UserProfile, String> {
+public interface ProfileRepository extends JpaRepository<Profile, String> {
 
-    Optional<UserProfile> findByPhoneAndDeletedIsFalse(String phone);
+    Optional<Profile> findByPhoneAndDeletedIsFalse(String phone);
 
-    Optional<UserProfile> findByIdAndDeletedIsFalse(String id);
+    Optional<Profile> findByIdAndDeletedIsFalse(String id);
 }

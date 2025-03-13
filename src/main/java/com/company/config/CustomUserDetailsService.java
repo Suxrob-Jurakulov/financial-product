@@ -1,6 +1,6 @@
 package com.company.config;
 
-import com.company.domain.UserProfile;
+import com.company.domain.Profile;
 import com.company.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String profileId) throws UsernameNotFoundException {
-        Optional<UserProfile> user = profileRepository.findByIdAndDeletedIsFalse(profileId);
+        Optional<Profile> user = profileRepository.findByIdAndDeletedIsFalse(profileId);
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }

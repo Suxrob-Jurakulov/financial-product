@@ -31,7 +31,7 @@ public class ProfileController extends DefaultController {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        form.setId(userDetails.getId());
+        form.setProfileId(userDetails.getId());
 
         return ResponseEntity.ok().body(service.edit(form));
     }
@@ -41,7 +41,7 @@ public class ProfileController extends DefaultController {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        form.setId(userDetails.getId());
+        form.setProfileId(userDetails.getId());
 
         // Encode password
         form.setPassword(passwordEncoder.encode(form.getPassword()));

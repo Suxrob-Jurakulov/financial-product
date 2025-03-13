@@ -15,7 +15,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class UserProfile {
+public class Profile {
 
     @Id
     @Column(nullable = false, updatable = false)

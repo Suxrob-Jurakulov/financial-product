@@ -1,6 +1,5 @@
 package com.company.form;
 
-import com.company.dto.profile.ProfileDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -29,6 +28,4 @@ public class ProfileForm {
     @NotBlank(message = "Phone cannot be empty")
     private String password;
 
-    // Other element
-    private ProfileDto profile;
 }

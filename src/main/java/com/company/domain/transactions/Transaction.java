@@ -1,6 +1,6 @@
 package com.company.domain.transactions;
 
-import com.company.domain.UserProfile;
+import com.company.domain.Profile;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -29,7 +29,7 @@ public class Transaction {
 
     @JoinColumn(name = "user_profile_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserProfile userProfile;
+    private Profile profile;
 
     @Column
     private String externalTransactionId;

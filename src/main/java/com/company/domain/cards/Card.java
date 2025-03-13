@@ -1,10 +1,15 @@
 package com.company.domain.cards;
 
-import com.company.domain.UserProfile;
+import com.company.domain.Profile;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
 @Entity
 public class Card {
 
@@ -12,19 +17,42 @@ public class Card {
     @Column(nullable = false, updatable = false)
     private String id;
 
-    @Column(name = "user_profile_id", nullable = false)
-    private String userProfileId;
+    @Column
+    private String name;
 
-    @JoinColumn(name = "user_profile_id", insertable = false, updatable = false)
+    @Column
+    private Long balance;
+
+    @Enumerated(EnumType.STRING)
+    private CardStatus status;
+
+    @Column(nullable = false)
+    private String maskedPan;
+
+    @Column(nullable = false)
+    private String realPan;
+
+    @Column(nullable = false)
+    private LocalDate expiryDate;
+
+    @Column(name = "profile_id", nullable = false)
+    private String profileId;
+
+    @JoinColumn(name = "profile_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserProfile userProfile;
+    private Profile profile;
 
-    @Column(name = "card_profile_id", nullable = false)
-    private String cardProfileId;
+    @Column
+    private String token;
 
-    @JoinColumn(name = "card_profile_id", insertable = false, updatable = false)
-    @OneToOne(fetch = FetchType.LAZY)
-    private CardProfile cardProfile;
+    @Column
+    private String bin;
+
+    @Column
+    private String cardIssuingBank;
+
+    @Column
+    private Integer currencyCode;
 
     @Column
     private String phone;
@@ -33,9 +61,9 @@ public class Card {
     private Boolean sms;
 
     @Column
-    private String bin;
+    private Boolean deleted;
 
     @Column
-    private Boolean deleted;
+    private LocalDateTime createdDate;
 
 }

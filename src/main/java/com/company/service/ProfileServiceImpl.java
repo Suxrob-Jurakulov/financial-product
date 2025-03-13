@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.domain.UserProfile;
+import com.company.domain.Profile;
 import com.company.dto.profile.ProfileDto;
 import com.company.form.PasswordForm;
 import com.company.form.ProfileEditForm;
@@ -22,49 +22,49 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto getProfile(String id) {
-        Optional<UserProfile> profileOpl = repository.findById(id);
+        Optional<Profile> profileOpl = repository.findById(id);
         return profileOpl.map(this::map).orElse(null);
     }
 
     @Override
     public ProfileDto edit(ProfileEditForm form) {
-        Optional<UserProfile> profileOpl = repository.findById(form.getId());
+        Optional<Profile> profileOpl = repository.findById(form.getProfileId());
         if (profileOpl.isPresent()) {
-            UserProfile userProfile = profileOpl.get();
+            Profile profile = profileOpl.get();
 
-            userProfile.setFirstname(form.getFirstname());
-            userProfile.setLastname(form.getLastname());
-            userProfile.setEmail(userProfile.getEmail());
+            profile.setFirstname(form.getFirstname());
+            profile.setLastname(form.getLastname());
+            profile.setEmail(profile.getEmail());
 
-            return map(repository.save(userProfile));
+            return map(repository.save(profile));
         }
         return null;
     }
 
     @Override
     public ProfileDto changePassword(PasswordForm form) {
-        Optional<UserProfile> profileOpl = repository.findById(form.getId());
+        Optional<Profile> profileOpl = repository.findById(form.getProfileId());
         if (profileOpl.isPresent()) {
-            UserProfile userProfile = profileOpl.get();
+            Profile profile = profileOpl.get();
 
-            userProfile.setPassword(form.getPassword());
+            profile.setPassword(form.getPassword());
 
-            return map(repository.save(userProfile));
+            return map(repository.save(profile));
         }
         return null;
     }
 
 
     // MAPPER
-    private ProfileDto map(UserProfile userProfile) {
+    private ProfileDto map(Profile profile) {
         ProfileDto dto = new ProfileDto();
 
-        dto.setId(userProfile.getId());
-        dto.setFirstname(userProfile.getFirstname());
-        dto.setLastname(userProfile.getLastname());
-        dto.setEmail(userProfile.getEmail());
-        dto.setPhone(userProfile.getPhone());
-        dto.setCreatedDate(userProfile.getCreatedDate());
+        dto.setId(profile.getId());
+        dto.setFirstname(profile.getFirstname());
+        dto.setLastname(profile.getLastname());
+        dto.setEmail(profile.getEmail());
+        dto.setPhone(profile.getPhone());
+        dto.setCreatedDate(profile.getCreatedDate());
 
         return dto;
     }

@@ -1,8 +1,8 @@
 package com.company.controller;
 
 import com.company.dto.auth.JwtDto;
-import com.company.dto.profile.ProfileDto;
 import com.company.dto.auth.TokenDto;
+import com.company.dto.profile.ProfileDto;
 import com.company.exp.BadRequestException;
 import com.company.form.ProfileForm;
 import jakarta.validation.Valid;
@@ -52,10 +52,8 @@ public class AuthController extends DefaultController {
             throw new BadRequestException("Wrong password!");
         }
 
-        form.setProfile(profile);
-
         // Create and save token
-        TokenDto dto = tokensService.add(form.getProfile());
+        TokenDto dto = tokensService.add(profile);
 
         return ResponseEntity.ok(new JwtDto(dto.getUid(), dto.getAccessToken(), dto.getRefreshToken()));
     }
