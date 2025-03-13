@@ -5,11 +5,9 @@ import com.company.dto.ProfileDto;
 import com.company.dto.TokenDto;
 import com.company.exp.BadRequestException;
 import com.company.form.ProfileForm;
-import com.company.service.AuthService;
-import com.company.service.TokensService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,40 +16,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
-
-    private final AuthService service;
-    private final TokensService tokensService;
-    private final PasswordEncoder encoder;
+public class AuthController extends DefaultController {
 
     private ProfileDto check(String username) {
-        return service.check(username);
+        return authService.check(username);
     }
 
 
     @PostMapping("/register")
-    public ResponseEntity<ProfileDto> register(@RequestBody ProfileForm form) {
+    public ResponseEntity<ProfileDto> register(@Valid @RequestBody ProfileForm form) {
 
         // Check profile in Database
-        ProfileDto profile = check(form.getUsername());
+        ProfileDto profile = check(form.getPhone());
         if (profile != null) {
-            throw new BadRequestException("This username is busy!");
+            throw new BadRequestException("This phone is busy!");
         }
 
-        return ResponseEntity.ok().body(service.add(form));
+        // Encode password
+        form.setPassword(passwordEncoder.encode(form.getPassword()));
+
+        return ResponseEntity.ok().body(authService.add(form));
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@RequestBody ProfileForm form) {
 
         // Check profile in Database
-        ProfileDto profile = check(form.getUsername());
+        ProfileDto profile = check(form.getPhone());
         if (profile == null) {
             throw new BadRequestException("User not found!");
         }
 
         // Check password
-        if (!encoder.matches(form.getPassword(), profile.getPassword())) {
+        if (!passwordEncoder.matches(form.getPassword(), profile.getPassword())) {
             throw new BadRequestException("Wrong password!");
         }
 

@@ -18,7 +18,11 @@ import java.util.List;
 public class ProfileDto {
 
     private String id;
-    private String username;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private String phone;
+
     @JsonIgnore
     private String password;
     private LocalDateTime createdDate;

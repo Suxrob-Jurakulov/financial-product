@@ -21,11 +21,17 @@ public class Profile {
     @Column(nullable = false, updatable = false)
     private String id;
 
+    @Column(nullable = false)
+    private String firstname;
+
     @Column
-    private String name;
+    private String lastname;
+
+    @Column
+    private String email;
 
     @Column(unique = true, nullable = false)
-    private String username;
+    private String phone;
 
     @Column(nullable = false)
     private String password;
@@ -37,9 +43,6 @@ public class Profile {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private List<ProfileModuleDto> modules;
-
-    @Column
-    private Long balance;
 
     @Column
     private LocalDateTime createdDate;

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ProfileRepository extends JpaRepository<Profile, String> {
 
-    Optional<Profile> findByUsernameAndDeletedIsFalse(String username);
+    Optional<Profile> findByPhoneAndDeletedIsFalse(String phone);
 
     Optional<Profile> findByIdAndDeletedIsFalse(String id);
 }

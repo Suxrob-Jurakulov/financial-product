@@ -16,13 +16,13 @@ public class CustomUserDetails implements UserDetails {
 
     @Getter
     String id;
-    String username;
+    String phone;
     String password;
     Set<GrantedAuthority> authorities;
 
     public CustomUserDetails(Profile profile) {
         id = profile.getId();
-        username = profile.getUsername();
+        phone = profile.getPhone();
         password = profile.getPassword();
         authorities = (Set<GrantedAuthority>) mapModulesToAuthorities(profile.getModules());
 
@@ -55,7 +55,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return phone;
     }
 
     @Override

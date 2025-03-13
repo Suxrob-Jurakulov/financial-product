@@ -52,8 +52,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if (authHeader != null && authHeader.startsWith("Basic ")) {
                 AuthBasicDto basic = getBasic(authHeader);
 
-                if (basic.getUsername() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    userDetails = customProfileDetailsService.loadUserByUsername(basic.getUsername());
+                if (basic.getPhone() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    userDetails = customProfileDetailsService.loadUserByUsername(basic.getPhone());
 
                     if (!userDetails.getPassword().equals(basic.getPassword())) {
                         throw new BadRequestException("Password is incorrect");
@@ -113,7 +113,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     String username = credentialsArray[0];
                     String password = credentialsArray[1];
                     if (username != null && !username.isBlank()) {
-                        basic.setUsername(username);
+                        basic.setPhone(username);
                     }
 
                     if (password != null && !password.isBlank()) {

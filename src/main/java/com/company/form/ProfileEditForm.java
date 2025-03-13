@@ -1,6 +1,5 @@
 package com.company.form;
 
-import com.company.dto.ProfileDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileForm {
+public class ProfileEditForm {
 
     @NotBlank(message = "Firstname cannot be empty!")
     @Size(min = 3, max = 50, message = "The firstname must be between 3 and 50 characters long.")
@@ -23,12 +22,6 @@ public class ProfileForm {
     @Email(message = "Email entered in incorrect format")
     private String email;
 
-    @NotBlank(message = "Phone cannot be empty")
-    private String phone;
-
-    @NotBlank(message = "Phone cannot be empty")
-    private String password;
-
     // Other element
-    private ProfileDto profile;
+    private String id;
 }

@@ -5,8 +5,6 @@ import com.company.dto.ProfileDto;
 import com.company.dto.TokenDto;
 import com.company.form.TokenForm;
 import com.company.helper.JwtHelper;
-import com.company.service.AuthService;
-import com.company.service.TokensService;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/token")
 @RequiredArgsConstructor
-public class TokenController {
+public class TokenController extends DefaultController {
 
-    private final TokensService tokensService;
-    private final AuthService service;
     private final JwtHelper jwtHelper;
 
     @PostMapping("/refresh")
@@ -53,7 +49,7 @@ public class TokenController {
         }
 
         // Check has user in database
-        ProfileDto profile = service.getById(jwtHelper.extractUserId(form.getRefreshToken()));
+        ProfileDto profile = authService.getById(jwtHelper.extractUserId(form.getRefreshToken()));
         if (profile == null) {
             throw new BadCredentialsException("User not found!");
         }

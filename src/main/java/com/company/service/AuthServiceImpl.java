@@ -6,7 +6,6 @@ import com.company.dto.ProfileDto;
 import com.company.form.ProfileForm;
 import com.company.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,11 +20,10 @@ import java.util.UUID;
 public class AuthServiceImpl implements AuthService {
 
     private final ProfileRepository repository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ProfileDto check(String username) {
-        Optional<Profile> profileOpt = repository.findByUsernameAndDeletedIsFalse(username);
+        Optional<Profile> profileOpt = repository.findByPhoneAndDeletedIsFalse(username);
         return profileOpt.map(this::map).orElse(null);
     }
 
@@ -41,11 +39,13 @@ public class AuthServiceImpl implements AuthService {
         Profile profile = new Profile();
 
         profile.setId(UUID.randomUUID().toString());
-        profile.setUsername(form.getUsername());
-        profile.setPassword(passwordEncoder.encode(form.getPassword()));
+        profile.setFirstname(form.getFirstname());
+        profile.setLastname(form.getLastname());
+        profile.setEmail(form.getEmail());
+        profile.setPhone(form.getPhone());
+        profile.setPassword(form.getPassword());
         profile.setRole(Role.ROLE_USER);
         profile.setCreatedDate(LocalDateTime.now());
-        profile.setModules(form.getModules());
         profile.setDeleted(false);
 
         repository.save(profile);
@@ -57,7 +57,10 @@ public class AuthServiceImpl implements AuthService {
         ProfileDto dto = new ProfileDto();
 
         dto.setId(profile.getId());
-        dto.setUsername(profile.getUsername());
+        dto.setFirstname(profile.getFirstname());
+        dto.setLastname(profile.getLastname());
+        dto.setEmail(profile.getEmail());
+        dto.setPhone(profile.getPhone());
         dto.setPassword(profile.getPassword());
         dto.setCreatedDate(profile.getCreatedDate());
         dto.setModules(profile.getModules());
