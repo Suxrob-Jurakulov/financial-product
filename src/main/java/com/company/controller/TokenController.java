@@ -1,13 +1,13 @@
 package com.company.controller;
 
+import com.company.dto.ResponseDto;
 import com.company.dto.auth.JwtDto;
-import com.company.dto.profile.ProfileDto;
 import com.company.dto.auth.TokenDto;
+import com.company.dto.profile.ProfileDto;
 import com.company.form.TokenForm;
 import com.company.helper.JwtHelper;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ public class TokenController extends DefaultController {
     private final JwtHelper jwtHelper;
 
     @PostMapping("/refresh")
-    public ResponseEntity<JwtDto> refresh(@RequestBody TokenForm form) {
+    public ResponseDto<JwtDto> refresh(@RequestBody TokenForm form) {
 
         // Parse token
         String tokenId;
@@ -57,7 +57,7 @@ public class TokenController extends DefaultController {
         // Set auth to form
         TokenDto dto = tokensService.add(profile);
 
-        return ResponseEntity.ok(new JwtDto(dto.getUid(), dto.getAccessToken(), dto.getRefreshToken()));
+        return new ResponseDto<>(new JwtDto(dto.getUid(), dto.getAccessToken(), dto.getRefreshToken()));
     }
 
 }

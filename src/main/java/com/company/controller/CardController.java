@@ -2,14 +2,14 @@ package com.company.controller;
 
 import com.company.config.CustomUserDetails;
 import com.company.dto.CardDto;
-import com.company.exp.BadRequestException;
+import com.company.dto.ResponseDto;
+import com.company.exp.CustomException;
 import com.company.form.cards.CardForm;
 import com.company.form.cards.CardNumberForm;
 import com.company.form.cards.CardStatusForm;
 import com.company.service.CardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,51 +29,52 @@ public class CardController extends DefaultController {
     private CardDto checkByUser(String number, String profileId) {
         CardDto card = service.checkByUser(number, profileId);
         if (card == null) {
-            throw new BadRequestException("Card not found");
+            throw new CustomException("Card not found");
         }
         return card;
     }
 
     @GetMapping("/cardId")
-    public ResponseEntity<CardDto> findById(@RequestParam("cardId") String cardId, Authentication auth) {
+    public ResponseDto<CardDto> findById(@RequestParam("cardId") String cardId, Authentication auth) {
+        //todo need extract common methods another a method
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 
-        return ResponseEntity.ok(service.getByIdAndProfile(userDetails.getId(), cardId));
+        return new ResponseDto<>(service.getByIdAndProfile(userDetails.getId(), cardId));
     }
 
     @GetMapping("/number")
-    public ResponseEntity<CardDto> findById(@RequestBody CardNumberForm form, Authentication auth) {
+    public ResponseDto<CardDto> findById(@RequestBody CardNumberForm form, Authentication auth) {
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 
-        return ResponseEntity.ok(checkByUser(form.getNumber(), userDetails.getId()));
+        return new ResponseDto<>(checkByUser(form.getNumber(), userDetails.getId()));
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<CardDto>> findAllByUser(Authentication auth) {
+    public ResponseDto<List<CardDto>> findAllByUser(Authentication auth) {
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 
-        return ResponseEntity.ok(service.findAll(userDetails.getId()));
+        return new ResponseDto<>(service.findAll(userDetails.getId()));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<CardDto> createCard(@Valid @RequestBody CardForm form, Authentication authentication) {
+    @PostMapping()
+    public ResponseDto<CardDto> createCard(@Valid @RequestBody CardForm form, Authentication authentication) {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         // Check card by number
         CardDto card = check(form.getNumber());
         if (card != null) {
-            throw new BadRequestException("Such a digital card already exists.");
+            throw new CustomException("Such a digital card already exists.");
         }
 
         form.setProfileId(userDetails.getId());
         form.setProfilePhone(userDetails.getUsername());
 
-        return ResponseEntity.ok(service.createCard(form));
+        return new ResponseDto<>(service.createCard(form));
     }
 
     @PutMapping("/change-status")
-    public ResponseEntity<String> changePassword(@Valid @RequestBody CardStatusForm form, Authentication authentication) {
+    public ResponseDto<String> changeStatus(@Valid @RequestBody CardStatusForm form, Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         form.setProfileId(userDetails.getId());
@@ -83,7 +84,7 @@ public class CardController extends DefaultController {
 
         service.changeStatus(form);
 
-        return ResponseEntity.ok().body("Status changed");
+        return new ResponseDto<>("Status changed");
     }
 
 }

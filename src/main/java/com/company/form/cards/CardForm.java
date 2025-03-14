@@ -16,11 +16,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @EqualsAndHashCode(callSuper = false)
 public class CardForm extends DefaultForm {
 
+    @NotBlank(message = "Card number cannot be empty! ")
     @Digits(integer = 16, fraction = 0, message = "Must be a 16-digit number only")
     private String number;
 
     @NotBlank(message = "Card date cannot be empty!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    //todo '28/03, 2028/07'
     @Future(message = "Expiry date must be in the future")
     private String expiryDate;
 

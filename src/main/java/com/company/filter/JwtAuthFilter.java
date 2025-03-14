@@ -3,7 +3,7 @@ package com.company.filter;
 import com.company.config.CustomUserDetails;
 import com.company.config.CustomUserDetailsService;
 import com.company.dto.auth.AuthBasicDto;
-import com.company.exp.BadRequestException;
+import com.company.exp.CustomException;
 import com.company.helper.JsonHelper;
 import com.company.helper.JwtHelper;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -56,7 +56,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     userDetails = customProfileDetailsService.loadUserByUsername(basic.getPhone());
 
                     if (!userDetails.getPassword().equals(basic.getPassword())) {
-                        throw new BadRequestException("Password is incorrect");
+                        throw new CustomException("Password is incorrect");
                     }
 
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -89,7 +89,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
 
-        } catch (UsernameNotFoundException | BadRequestException | BadCredentialsException | ExpiredJwtException ex) {
+        } catch (UsernameNotFoundException | CustomException | BadCredentialsException | ExpiredJwtException ex) {
             response.setCharacterEncoding("UTF-8");
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
