@@ -27,10 +27,6 @@ public class Transaction {
     @Column(name = "profile_id")
     private String profileId;
 
-    @JoinColumn(name = "profile_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Profile profile;
-
     @Column
     private String externalTransactionId;
 

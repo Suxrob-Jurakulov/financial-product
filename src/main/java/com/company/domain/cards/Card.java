@@ -39,10 +39,6 @@ public class Card {
     @Column(name = "profile_id", nullable = false)
     private String profileId;
 
-    @JoinColumn(name = "profile_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Profile profile;
-
     @Column
     private String bin;
 
