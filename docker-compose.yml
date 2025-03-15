@@ -17,9 +17,9 @@ services:
     container_name: financial-product-db
     restart: on-failure
     environment:
-      POSTGRES_DB: your_db_name
+      POSTGRES_DB: finance
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: your_password
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
     volumes:
