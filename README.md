@@ -121,10 +121,6 @@ This project is a REST API for managing financial transactions, users, and cards
   }
   ```
 
-## Postman Collection
-To test API endpoints using Postman, import the provided collection:
-👉 [Download Postman Collection](#)
-
 ## Database Schema
 ### **Profile Table**
 | Column Name | Type | Constraints |
