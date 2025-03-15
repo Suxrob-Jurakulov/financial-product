@@ -6,6 +6,7 @@ import com.company.dto.auth.TokenDto;
 import com.company.dto.profile.ProfileDto;
 import com.company.exp.CustomException;
 import com.company.form.ProfileForm;
+import com.company.form.profile.LoginForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,19 +39,17 @@ public class AuthController extends DefaultController {
     }
 
     @PostMapping("/login")
-    public ResponseDto<JwtDto> login(@Valid @RequestBody ProfileForm form) {
+    public ResponseDto<JwtDto> login(@Valid @RequestBody LoginForm form) {
 
         // Check profile in Database
         ProfileDto profile = check(form.getPhone());
         if (profile == null) {
             throw new CustomException("User not found!");
         }
-
         // Check password
         if (!passwordEncoder.matches(form.getPassword(), profile.getPassword())) {
             throw new CustomException("Wrong password!");
         }
-
         // Create and save token
         TokenDto dto = tokensService.add(profile);
 
