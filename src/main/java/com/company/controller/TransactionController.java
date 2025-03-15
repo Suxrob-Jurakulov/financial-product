@@ -28,7 +28,6 @@ public class TransactionController {
     public ResponseDto<PagingDto<TransactionDto>> paging(@RequestBody TransactionParamsForm form) {
 
         form.setProfileId(CurrentUserUtil.currentUser().getId());
-
         return new ResponseDto<>(transactionService.getByParams(form));
     }
 
@@ -36,7 +35,6 @@ public class TransactionController {
     public ResponseDto<TransactionDto> getTransaction(@PathVariable String transactionId) {
 
         TransactionDto dto = transactionService.getTransactionByProfile(transactionId, CurrentUserUtil.currentUser().getId());
-
         return new ResponseDto<>(dto);
     }
 
@@ -47,7 +45,6 @@ public class TransactionController {
 
         // Set current profile id
         form.setProfileId(CurrentUserUtil.currentUser().getId());
-
         return new ResponseDto<>(transactionService.doTransaction(form, TransactionStatus.valueOf(transactionStatus)));
     }
 }

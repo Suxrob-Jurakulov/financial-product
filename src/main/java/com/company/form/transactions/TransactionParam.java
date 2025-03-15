@@ -1,7 +1,6 @@
 package com.company.form.transactions;
 
 import com.company.domain.transactions.TransactionType;
-import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;

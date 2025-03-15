@@ -10,11 +10,12 @@ import com.company.service.CardService;
 import com.company.util.CurrentUserUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/cards")
 @RequiredArgsConstructor
@@ -36,16 +37,19 @@ public class CardController extends DefaultController {
 
     @GetMapping("/{cardId}")
     public ResponseDto<CardDto> findById(@PathVariable("cardId") String cardId) {
+        log.info("Calling find card by id method: {}", cardId);
         return new ResponseDto<>(service.getByIdAndProfile(CurrentUserUtil.currentUser().getId(), cardId));
     }
 
     @GetMapping("/number")
     public ResponseDto<CardDto> findById(@RequestBody CardNumberForm form) {
+        log.info("Calling find card by number: {}", form.getNumber());
         return new ResponseDto<>(checkByUser(form.getNumber(), CurrentUserUtil.currentUser().getId()));
     }
 
     @GetMapping("/get-all")
-    public ResponseDto<List<CardDto>> findAllByUser(Authentication auth) {
+    public ResponseDto<List<CardDto>> findAllByUser() {
+        log.info("Calling find all cards method");
         return new ResponseDto<>(service.findAll(CurrentUserUtil.currentUser().getId()));
     }
 

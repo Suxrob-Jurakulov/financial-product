@@ -13,11 +13,11 @@ public class TransactionSpecification {
         return (root, query, cb) -> cb.equal(root.get("profileId"), profileId);
     }
 
-    public Specification<Transaction> hasSenderCard(String senderCard) {
+    public Specification<Transaction> hasDebit(String senderCard) {
         return (root, query, cb) -> cb.equal(root.get("senderCard"), senderCard);
     }
 
-    public Specification<Transaction> hasRecipientCard(String recipientCard) {
+    public Specification<Transaction> hasCredit(String recipientCard) {
         return (root, query, cb) -> cb.equal(root.get("recipientCard"), recipientCard);
     }
 

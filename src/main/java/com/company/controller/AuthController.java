@@ -8,7 +8,6 @@ import com.company.exp.CustomException;
 import com.company.form.ProfileForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,6 @@ public class AuthController extends DefaultController {
     private ProfileDto check(String username) {
         return authService.check(username);
     }
-
 
     @PostMapping("/register")
     public ResponseDto<ProfileDto> register(@Valid @RequestBody ProfileForm form) {

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,6 @@ public class CardServiceImpl implements CardService {
     @Override
     public CardDto check(String number) {
         Optional<Card> cardOpl = repository.findByRealPanAndDeletedIsFalse(number);
-
         return cardOpl.map(this::map).orElse(null);
     }
 
@@ -44,7 +42,6 @@ public class CardServiceImpl implements CardService {
         if (!cardList.isEmpty()) {
             return cardList.stream().map(this::map).toList();
         }
-
         return List.of();
     }
 
@@ -79,6 +76,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public void changeStatus(CardStatusForm form) {
+        log.info("Changing status of Card: {}", form);
         repository.changeStatus(CardStatus.valueOf(form.getStatus()), form.getNumber(), form.getProfileId());
     }
 

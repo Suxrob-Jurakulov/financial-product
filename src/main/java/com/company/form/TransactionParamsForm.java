@@ -18,6 +18,12 @@ public class TransactionParamsForm extends DefaultForm<String> {
     @Pattern(regexp = "credit|debit", message = "Invalid type value. Allowed types: credit, debit")
     private String type;
 
+    @Pattern(regexp = "\\d{16}", message = "Must be a 16-digit number only")
+    private String senderCard;
+
+    @Pattern(regexp = "\\d{16}", message = "Must be a 16-digit number only")
+    private String recipientCard;
+
     @NotBlank(message = "Page cannot be empty")
     @Min(value = 1, message = "The value must be at least 1.")
     private Integer page;
