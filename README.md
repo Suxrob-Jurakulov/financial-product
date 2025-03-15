@@ -32,6 +32,54 @@ This project is a REST API for managing financial transactions, users, and cards
    ```
 3. The application will be available at: `http://localhost:8080`
 
+
+## ⚠️ Database Configuration
+Before running the project, update **application.yml** and **docker-compose.yml** files with your database configuration.
+
+### 📌 application.yml file:
+```yaml
+  # DataSource Configuration
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/<database_name>
+    username: <your_username>
+    password: <your_password>
+```
+
+### 📌 docker-compose.yml file:
+```yaml
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: financial-product-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/<database_name>
+      SPRING_DATASOURCE_USERNAME: <your_username>
+      SPRING_DATASOURCE_PASSWORD: <your_password>
+
+  postgres:
+    image: postgres:15
+    container_name: financial-product-db
+    restart: on-failure
+    environment:
+      POSTGRES_DB: <database_name>
+      POSTGRES_USER: <your_username>
+      POSTGRES_PASSWORD: <your_password>
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+```
+📢 **Important!** After making changes, restart Docker containers:
+
 ## API Endpoints
 ### Authentication
 - `POST /auth/register` - Register a new user
