@@ -38,7 +38,7 @@ public class AuthController extends DefaultController {
     }
 
     @PostMapping("/login")
-    public ResponseDto<JwtDto> login(@RequestBody ProfileForm form) {
+    public ResponseDto<JwtDto> login(@Valid @RequestBody ProfileForm form) {
 
         // Check profile in Database
         ProfileDto profile = check(form.getPhone());

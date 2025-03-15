@@ -19,7 +19,8 @@ public class TransactionDto {
     private String id;
     private String senderCard;
     private String recipientCard;
-    private String profileId;
+    private String senderProfileId;
+    private String recipientProfileId;
     private ProfileDto profile;
     private String externalTransactionId;
     private String transactionStatus;

@@ -1,6 +1,5 @@
 package com.company.domain.transactions;
 
-import com.company.domain.Profile;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,8 +23,11 @@ public class Transaction {
     @Column
     private String recipientCard;
 
-    @Column(name = "profile_id")
-    private String profileId;
+    @Column
+    private String senderProfileId;
+
+    @Column
+    private String recipientProfileId;
 
     @Column
     private String externalTransactionId;

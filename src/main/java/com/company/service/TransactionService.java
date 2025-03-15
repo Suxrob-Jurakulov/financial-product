@@ -14,7 +14,9 @@ public interface TransactionService {
 
     PagingDto<TransactionDto> getByParams(TransactionParamsForm form);
 
-    TransactionDto getTransactionByProfile(String transactionId, String profileId);
+    TransactionDto getTransactionBySenderProfile(String transactionId, String senderProfileId);
+
+    TransactionDto getTransactionByRecipientProfile(String transactionId, String recipientProfileId);
 
     TransactionDto doTransaction(TransactionForm transactionForm, TransactionStatus transactionStatus);
 }

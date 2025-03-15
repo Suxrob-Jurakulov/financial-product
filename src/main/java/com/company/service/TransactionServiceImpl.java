@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,15 +43,31 @@ public class TransactionServiceImpl implements TransactionService {
     public PagingDto<TransactionDto> getByParams(TransactionParamsForm form) {
         List<Sort.Order> orders = List.of(Sort.Order.desc("createdDate"));
 
-        // Dynamically merge specifications
-        Specification<Transaction> spec = Specification.where(transactionSpecification.hasProfileId(form.getProfileId()));
+        Specification<Transaction> spec;
 
-        if ("debit".equals(form.getType())) {
-            spec = spec.and(transactionSpecification.hasSenderCard(form.getType()));
-        } else if ("credit".equals(form.getType())) {
-            spec = spec.and(transactionSpecification.hasRecipientCard(form.getType()));
+        // Credit or debit
+        if (Objects.equals(form.getType(), "debit")) {
+            spec = Specification.where(transactionSpecification.hasSenderProfileId(form.getProfileId()));
+        } else {
+            spec = Specification.where(transactionSpecification.hasRecipientProfileId(form.getProfileId()));
         }
 
+        // Status
+        if (form.getStatus() != null && !form.getStatus().isBlank()) {
+            spec = spec.and(transactionSpecification.hasStatus(TransactionStatus.valueOf(form.getStatus())));
+        }
+
+        // Sender card
+        if (form.getSenderCard() != null && !form.getSenderCard().isBlank()) {
+            spec = spec.and(transactionSpecification.hasSenderCard(form.getSenderCard()));
+        }
+
+        // Recipient card
+        if (form.getRecipientCard() != null && !form.getRecipientCard().isBlank()) {
+            spec = spec.and(transactionSpecification.hasRecipientCard(form.getRecipientCard()));
+        }
+
+        // Start and end date
         if (form.getStartDate() != null || form.getEndDate() != null) {
             spec = spec.and(transactionSpecification.hasDateRange(form.getStartDate(), form.getEndDate()));
         }
@@ -66,8 +83,14 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionDto getTransactionByProfile(String transactionId, String profileId) {
-        Optional<Transaction> transactionOpl = repository.findByIdAndProfileId(transactionId, profileId);
+    public TransactionDto getTransactionBySenderProfile(String transactionId, String senderProfileId) {
+        Optional<Transaction> transactionOpl = repository.findByIdAndSenderProfileId(transactionId, senderProfileId);
+        return transactionOpl.map(this::map).orElse(null);
+    }
+
+    @Override
+    public TransactionDto getTransactionByRecipientProfile(String transactionId, String recipientProfileId) {
+        Optional<Transaction> transactionOpl = repository.findByIdAndRecipientProfileId(transactionId, recipientProfileId);
         return transactionOpl.map(this::map).orElse(null);
     }
 
@@ -150,7 +173,8 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setId(UUID.randomUUID().toString());
         transaction.setSenderCard(extPaymentTransactionDto.getFromPan());
         transaction.setRecipientCard(extPaymentTransactionDto.getToPan());
-        transaction.setProfileId(form.getProfileId());
+        transaction.setSenderProfileId(form.getProfileId());
+        transaction.setRecipientProfileId(extPaymentTransactionDto.getRecipientProfileId());
         transaction.setExternalTransactionId(extPaymentTransactionDto.getExternalPaymentTransactionId());
         transaction.setTransactionStatus(extPaymentTransactionDto.getTransactionStatus());
         transaction.setSuccess(extPaymentTransactionDto.isSuccess());
@@ -170,7 +194,8 @@ public class TransactionServiceImpl implements TransactionService {
         dto.setId(transaction.getId());
         dto.setSenderCard(transaction.getSenderCard());
         dto.setRecipientCard(transaction.getRecipientCard());
-        dto.setProfileId(transaction.getProfileId());
+        dto.setSenderProfileId(transaction.getSenderProfileId());
+        dto.setRecipientProfileId(transaction.getRecipientProfileId());
         dto.setExternalTransactionId(transaction.getExternalTransactionId());
         dto.setTransactionStatus(transaction.getTransactionStatus().name());
         dto.setSuccess(transaction.getSuccess());

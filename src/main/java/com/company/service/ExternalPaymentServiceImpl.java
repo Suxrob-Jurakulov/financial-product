@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.domain.transactions.TransactionStatus;
 import com.company.dto.AmountDetailsDto;
+import com.company.dto.CardDto;
 import com.company.dto.ExternalPaymentTransactionDto;
 import com.company.exp.CustomException;
 import com.company.form.transactions.TransactionForm;
@@ -21,20 +22,26 @@ public class ExternalPaymentServiceImpl implements ExternalPaymentService {
     private final CardService cardService;
 
     @Override
-    public ExternalPaymentTransactionDto doExternalTransaction(TransactionForm transactionForm, TransactionStatus transactionStatus) {
-        log.info("Calling external payment service with {}, status {}", transactionForm, transactionStatus);
+    public ExternalPaymentTransactionDto doExternalTransaction(TransactionForm form, TransactionStatus transactionStatus) {
+        log.info("Calling external payment service with {}, status {}", form, transactionStatus);
         if (Objects.equals(TransactionStatus.SUCCESS, transactionStatus)) {
-            return getTransaction(transactionForm, transactionStatus);
+            ExternalPaymentTransactionDto transaction = getTransaction(form, transactionStatus);
+
+            // Get recipient card profile
+            CardDto card = cardService.check(form.getToTransactionParam().getCardNumber());
+            transaction.setRecipientProfileId(card.getProfileId());
+
+            return transaction;
         }
         if (Objects.equals(TransactionStatus.TIMEOUT, transactionStatus)) {
             try {
                 Thread.sleep(5000);
             } catch (Exception ignore) {
-                log.error("The transaction timed out {}", transactionForm);
+                log.error("The transaction timed out {}", form);
             }
-            return getTransaction(transactionForm, transactionStatus);
+            return getTransaction(form, transactionStatus);
         }
-        return getTransaction(transactionForm, TransactionStatus.FAILED);
+        return getTransaction(form, TransactionStatus.FAILED);
     }
 
     @Override

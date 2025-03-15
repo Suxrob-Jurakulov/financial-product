@@ -7,6 +7,7 @@ import com.company.dto.profile.ProfileDto;
 import com.company.form.TokenForm;
 import com.company.helper.JwtHelper;
 import io.jsonwebtoken.JwtException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class TokenController extends DefaultController {
     private final JwtHelper jwtHelper;
 
     @PostMapping("/refresh")
-    public ResponseDto<JwtDto> refresh(@RequestBody TokenForm form) {
+    public ResponseDto<JwtDto> refresh(@Valid @RequestBody TokenForm form) {
 
         // Parse token
         String tokenId;

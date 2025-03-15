@@ -42,7 +42,7 @@ public class CardController extends DefaultController {
     }
 
     @GetMapping("/number")
-    public ResponseDto<CardDto> findById(@RequestBody CardNumberForm form) {
+    public ResponseDto<CardDto> findById(@Valid @RequestBody CardNumberForm form) {
         log.info("Calling find card by number: {}", form.getNumber());
         return new ResponseDto<>(checkByUser(form.getNumber(), CurrentUserUtil.currentUser().getId()));
     }

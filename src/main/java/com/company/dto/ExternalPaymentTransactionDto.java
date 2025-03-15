@@ -14,6 +14,7 @@ public class ExternalPaymentTransactionDto {
     private String externalPaymentTransactionId;
     private String fromPan;
     private String toPan;
+    private String recipientProfileId;
     private Long amount;
     private boolean success;
 }

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 
 import static com.company.config.CardDatabaseInitializer.PROFILE1_CARD_NUMBER;
 import static com.company.config.CardDatabaseInitializer.PROFILE2_CARD_NUMBER;
+import static com.company.config.ProfileDatabaseInitializer.PROFILE2_ID;
 import static com.company.config.ProfileDatabaseInitializer.PROFILE_ID;
 
 @Slf4j
@@ -36,7 +37,8 @@ public class TransactionDatabaseInitializer {
             transaction.setId(TRANSACTION_SUCCESS_ID);
             transaction.setSenderCard(PROFILE1_CARD_NUMBER);
             transaction.setRecipientCard(PROFILE2_CARD_NUMBER);
-            transaction.setProfileId(PROFILE_ID);
+            transaction.setSenderProfileId(PROFILE_ID);
+            transaction.setRecipientProfileId(PROFILE2_ID);
             transaction.setTransactionStatus(TransactionStatus.SUCCESS);
             transaction.setSuccess(true);
             transaction.setRequestAmount(1000L);
@@ -55,7 +57,7 @@ public class TransactionDatabaseInitializer {
             transaction.setId(TRANSACTION_FAILED_ID);
             transaction.setSenderCard(PROFILE1_CARD_NUMBER);
             transaction.setRecipientCard(PROFILE2_CARD_NUMBER);
-            transaction.setProfileId(PROFILE_ID);
+            transaction.setSenderProfileId(PROFILE_ID);
             transaction.setTransactionStatus(TransactionStatus.FAILED);
             transaction.setSuccess(false);
             transaction.setRequestAmount(1000L);
@@ -74,7 +76,7 @@ public class TransactionDatabaseInitializer {
             transaction.setId(TRANSACTION_TIMEOUT_ID);
             transaction.setSenderCard(PROFILE1_CARD_NUMBER);
             transaction.setRecipientCard(PROFILE2_CARD_NUMBER);
-            transaction.setProfileId(PROFILE_ID);
+            transaction.setSenderProfileId(PROFILE_ID);
             transaction.setTransactionStatus(TransactionStatus.TIMEOUT);
             transaction.setSuccess(false);
             transaction.setRequestAmount(1000L);

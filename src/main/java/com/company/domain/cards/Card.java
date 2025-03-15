@@ -1,11 +1,9 @@
 package com.company.domain.cards;
 
-import com.company.domain.Profile;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 
@@ -36,7 +34,7 @@ public class Card {
     @Column(nullable = false)
     private YearMonth expiryDate;
 
-    @Column(name = "profile_id", nullable = false)
+    @Column(nullable = false)
     private String profileId;
 
     @Column

@@ -25,16 +25,23 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @GetMapping("/paging")
-    public ResponseDto<PagingDto<TransactionDto>> paging(@RequestBody TransactionParamsForm form) {
-
+    public ResponseDto<PagingDto<TransactionDto>> paging(@Valid @RequestBody TransactionParamsForm form) {
         form.setProfileId(CurrentUserUtil.currentUser().getId());
+
         return new ResponseDto<>(transactionService.getByParams(form));
     }
 
-    @GetMapping("/{transactionId}")
-    public ResponseDto<TransactionDto> getTransaction(@PathVariable String transactionId) {
+    @GetMapping("/debit/{transactionId}")
+    public ResponseDto<TransactionDto> getDebitTransaction(@PathVariable String transactionId) {
 
-        TransactionDto dto = transactionService.getTransactionByProfile(transactionId, CurrentUserUtil.currentUser().getId());
+        TransactionDto dto = transactionService.getTransactionBySenderProfile(transactionId, CurrentUserUtil.currentUser().getId());
+        return new ResponseDto<>(dto);
+    }
+
+    @GetMapping("/credit/{transactionId}")
+    public ResponseDto<TransactionDto> getCreditTransaction(@PathVariable String transactionId) {
+
+        TransactionDto dto = transactionService.getTransactionByRecipientProfile(transactionId, CurrentUserUtil.currentUser().getId());
         return new ResponseDto<>(dto);
     }
 
