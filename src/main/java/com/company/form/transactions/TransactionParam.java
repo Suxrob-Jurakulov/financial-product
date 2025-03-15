@@ -1,4 +1,4 @@
-package com.company.form;
+package com.company.form.transactions;
 
 import com.company.domain.transactions.TransactionType;
 import jakarta.validation.constraints.Digits;
@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 public class TransactionParam {
 
     @NotNull(message = "Card number cannot be null")
-    @Digits(integer = 16, fraction = 0, message = "Must be a 16-digit number only")
+    @Pattern(regexp = "\\d{16}", message = "Must be a 16-digit number only")
     private String cardNumber;
 
     @NotNull(message = "Currency cannot be null")
-    @Digits(integer = 3, fraction = 0, message = "Currency must be a 3-digit number only")
+    @Pattern(regexp = "\\d{3}", message = "Currency must be a 3-digit number only")
     private String ccy;
 
     @NotNull(message = "Type cannot be null")

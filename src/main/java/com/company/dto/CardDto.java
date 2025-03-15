@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class CardDto {
     private String status;
     private String maskedPan;
     private String realPan;
-    private LocalDate expiryDate;
+    private YearMonth expiryDate;
     private String profileId;
     private ProfileDto profile;
     private String bin;

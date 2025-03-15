@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.domain.cards.Card;
+import com.company.domain.cards.CardStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,10 +22,16 @@ public interface CardRepository extends JpaRepository<Card, String>, JpaSpecific
 
     Optional<Card> findByIdAndProfileIdAndDeletedIsFalse(String cardId, String id);
 
+    List<Card> findAllByProfileIdAndDeletedIsFalse(String profileId);
+
     @Transactional
     @Modifying
-    @Query("update Card set status = :status where realPan = :number and profileId = :profileId")
-    void changeStatus(@Param("status") String status, @Param("number") String number, @Param("profileId") String profileId);
+    @Query("update Card set status = :status where realPan = :realPan and profileId = :profileId")
+    void changeStatus(@Param("status") CardStatus status, @Param("realPan") String realPan, @Param("profileId") String profileId);
 
-    List<Card> findAllByProfileIdAndDeletedIsFalse(String profileId);
+    @Transactional
+    @Modifying
+    @Query("update Card c set c.balance = :newBalance where c.id = :cardId")
+    void updateBalance(@Param("cardId") String cardId, @Param("newBalance") Long newBalance);
+
 }

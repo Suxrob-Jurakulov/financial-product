@@ -64,7 +64,7 @@ public class ValidateServiceImpl implements ValidateService {
         }
 
         if (Boolean.FALSE.equals(externalPaymentTransactionDto.isSuccess())
-                || Objects.equals(TransactionStatus.SUCCESS, externalPaymentTransactionDto.getTransactionStatus())) {
+                || !Objects.equals(TransactionStatus.SUCCESS, externalPaymentTransactionDto.getTransactionStatus())) {
             log.error("External payment transaction is not success with status {}", externalPaymentTransactionDto.getTransactionStatus().name());
             return false;
         }

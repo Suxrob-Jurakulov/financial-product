@@ -24,18 +24,15 @@ public class Transaction {
     @Column
     private String recipientCard;
 
-    @Column(name = "user_profile_id")
-    private String userProfileId;
+    @Column(name = "profile_id")
+    private String profileId;
 
-    @JoinColumn(name = "user_profile_id", insertable = false, updatable = false)
+    @JoinColumn(name = "profile_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Profile profile;
 
     @Column
     private String externalTransactionId;
-
-    @Column
-    private String externalTransactionStatus;
 
     @Column
     @Enumerated(EnumType.STRING)

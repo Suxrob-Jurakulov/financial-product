@@ -1,5 +1,7 @@
-package com.company.form;
+package com.company.form.transactions;
 
+import com.company.form.DefaultForm;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class TransactionForm extends DefaultForm {
 
     @NotNull(message = "Amount cannot be null")
+    @Min(value = 100 , message = "Amount required higher than 100")
     private Long amount;
 
     @NotNull(message = "Sender info cannot be null")

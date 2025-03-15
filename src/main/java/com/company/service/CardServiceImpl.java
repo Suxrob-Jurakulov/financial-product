@@ -7,6 +7,7 @@ import com.company.form.cards.CardForm;
 import com.company.form.cards.CardStatusForm;
 import com.company.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,12 +16,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.company.util.Constants.GENERAL_COMMISSION_CARD;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CardServiceImpl implements CardService {
 
     private final CardRepository repository;
-
 
     @Override
     public CardDto check(String number) {
@@ -61,7 +64,7 @@ public class CardServiceImpl implements CardService {
         card.setStatus(CardStatus.ACTIVE);
         card.setMaskedPan(form.getNumber().substring(0, 6) + "******" + form.getNumber().substring(12));
         card.setRealPan(form.getNumber());
-        card.setExpiryDate(LocalDate.parse(form.getExpiryDate()));
+        card.setExpiryDate(form.getExpiryDate());
         card.setProfileId(form.getProfileId());
         card.setBin(form.getNumber().substring(0, 8));
         card.setCardIssuingBank("Universal Bank");
@@ -76,7 +79,42 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public void changeStatus(CardStatusForm form) {
-        repository.changeStatus(form.getStatus(), form.getNumber(), form.getProfileId());
+        repository.changeStatus(CardStatus.valueOf(form.getStatus()), form.getNumber(), form.getProfileId());
+    }
+
+    @Override
+    public void debitCard(String senderPan, Long amount) {
+        Optional<Card> cardOpl = repository.findByRealPanAndDeletedIsFalse(senderPan);
+        if (cardOpl.isPresent()) {
+            Card card = cardOpl.get();
+            long newBalance = card.getBalance() - amount;
+            updateCardBalance(card, newBalance);
+        }
+    }
+
+    @Override
+    public void creditCard(String recipientPan, Long amount) {
+        Optional<Card> cardOpl = repository.findByRealPanAndDeletedIsFalse(recipientPan);
+        if (cardOpl.isPresent()) {
+            Card card = cardOpl.get();
+            long newBalance = card.getBalance() + amount;
+            updateCardBalance(card, newBalance);
+        }
+    }
+
+    @Override
+    public void creditCommissionCard(Long amount) {
+        Optional<Card> cardOpl = repository.findByRealPanAndDeletedIsFalse(GENERAL_COMMISSION_CARD);
+        if (cardOpl.isPresent()) {
+            Card card = cardOpl.get();
+            long newBalance = card.getBalance() + amount;
+            updateCardBalance(card, newBalance);
+        }
+    }
+
+    private void updateCardBalance(Card card, long newBalance) {
+        log.info("Updated balance {} to {}", card.getBalance(), newBalance);
+        repository.updateBalance(card.getId(), newBalance);
     }
 
 

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 
 @Getter
 @Setter
@@ -29,11 +30,11 @@ public class Card {
     @Column(nullable = false)
     private String maskedPan;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String realPan;
 
     @Column(nullable = false)
-    private LocalDate expiryDate;
+    private YearMonth expiryDate;
 
     @Column(name = "profile_id", nullable = false)
     private String profileId;
@@ -41,9 +42,6 @@ public class Card {
     @JoinColumn(name = "profile_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Profile profile;
-
-    @Column
-    private String token;
 
     @Column
     private String bin;

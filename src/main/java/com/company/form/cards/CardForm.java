@@ -1,14 +1,18 @@
 package com.company.form.cards;
 
 import com.company.form.DefaultForm;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Future;
+import com.company.helper.YearMonthDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.YearMonth;
 
 @Data
 @AllArgsConstructor
@@ -17,18 +21,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class CardForm extends DefaultForm {
 
     @NotBlank(message = "Card number cannot be empty! ")
-    @Digits(integer = 16, fraction = 0, message = "Must be a 16-digit number only")
+    @Pattern(regexp = "\\d{16}", message = "Must be a 16-digit number only")
     private String number;
 
-    @NotBlank(message = "Card date cannot be empty!")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    //todo '28/03, 2028/07'
-    @Future(message = "Expiry date must be in the future")
-    private String expiryDate;
+    @NotNull(message = "Expiry date is required!")
+    @JsonDeserialize(using = YearMonthDeserializer.class)
+    private YearMonth expiryDate;
 
     @NotBlank(message = "Card name cannot be empty!")
     private String name;
 
     // Other elements
     private String profilePhone;
+
+    @AssertTrue(message = "Expiry date must be in the future")
+    public boolean isExpiryDateValid() {
+        return expiryDate != null && expiryDate.isAfter(YearMonth.now());
+    }
 }

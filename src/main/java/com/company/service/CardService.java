@@ -19,4 +19,10 @@ public interface CardService {
     CardDto createCard(CardForm form);
 
     void changeStatus(CardStatusForm form);
+
+    void debitCard(String senderPan, Long amount);
+
+    void creditCard(String recipientPan, Long amount);
+
+    void creditCommissionCard(Long amount);
 }

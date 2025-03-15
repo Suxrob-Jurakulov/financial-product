@@ -2,6 +2,7 @@ package com.company.form.cards;
 
 import com.company.form.DefaultForm;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class CardStatusForm extends DefaultForm {
 
-    @Digits(integer = 16, fraction = 0, message = "Must be a 16-digit number only")
+    @NotBlank(message = "Card number cannot be empty! ")
+    @Pattern(regexp = "\\d{16}", message = "Must be a 16-digit number only")
     private String number;
 
     @NotNull(message = "Status cannot be null")

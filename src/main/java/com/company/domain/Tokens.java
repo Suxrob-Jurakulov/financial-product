@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * @author Sukhrob
+ */
 @Getter
 @Setter
 @Entity

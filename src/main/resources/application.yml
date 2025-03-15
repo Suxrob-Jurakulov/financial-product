@@ -7,7 +7,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
   # DataSource
@@ -24,7 +24,7 @@ server:
   # Token expired date
 tokens:
   access:
-    expiration-time: 200
+    expiration-time: 600
   refresh:
-    expiration-time: 1000
+    expiration-time: 6000
   sign-key: 6250655367566B5970337336763979244226452948404D635166546A576D5A71
