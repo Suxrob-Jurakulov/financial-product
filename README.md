@@ -17,8 +17,6 @@ This project is a REST API for managing financial transactions, users, and cards
 ## Setup Instructions
 ### Prerequisites
 - Install **Docker** and **Docker Compose**
-- Install **Java 17**
-- Install **Maven**
 
 ### Running the Project
 1. Clone the repository:
@@ -34,7 +32,7 @@ This project is a REST API for managing financial transactions, users, and cards
 
 
 ## ⚠️ Database Configuration
-Before running the project, update **application.yml** and **docker-compose.yml** files with your database configuration.
+Before running the project, update the database settings in both application.yml and docker-compose.yml.
 
 ### 📌 application.yml file:
 ```yaml
@@ -45,6 +43,7 @@ Before running the project, update **application.yml** and **docker-compose.yml*
     username: <your_username>
     password: <your_password>
 ```
+🔹 Note: The database host should match the docker-compose.yml service name (in this case, postgres).
 
 ### 📌 docker-compose.yml file:
 ```yaml
